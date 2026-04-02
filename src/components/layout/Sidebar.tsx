@@ -13,7 +13,7 @@ import { useTaskStore } from '../../store/taskStore';
 const BullFitLogo: React.FC<{ collapsed: boolean }> = ({ collapsed }) => (
   <div className="flex items-center gap-2.5">
     <div className="w-8 h-8 flex-shrink-0">
-      <img src="/src/assets/bullfit-logo.png" alt="BullFit" className="w-full h-full object-contain brightness-0 dark:invert" />
+      <img src="/bullfit-logo.png" alt="BullFit" className="w-full h-full object-contain brightness-0 dark:invert" />
     </div>
     {!collapsed && (
       <div className="flex items-baseline gap-0.5">
