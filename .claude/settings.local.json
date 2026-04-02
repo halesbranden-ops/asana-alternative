@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm run:*)",
+      "Bash(curl -L \"https://www.dropbox.com/scl/fi/gdlbonmbi1g95gt9ptwj1/Logo_Grin-square.png?rlkey=7bkbrqk7czb2r9f2flnpna0jm&st=zza49rxz&dl=1\" -o \"/c/Users/Branden Hales/Asana Alternative/src/assets/bullfit-logo.png\")",
+      "Bash(grep -v \"//.*text-white\")",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const rbc = require\\(''''react-big-calendar''''\\); console.log\\(Object.keys\\(rbc\\)\\)\")",
+      "Bash(node -e \"const df = require\\(''date-fns''\\); console.log\\(typeof df.format, typeof df.parse, typeof df.startOfWeek, typeof df.getDay\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/tailwindcss/package.json''\\); console.log\\(p.version\\)\")",
+      "Bash(node -e \"const p = require\\(''./package.json''\\); console.log\\(JSON.stringify\\({type: p.type, scripts: p.scripts}, null, 2\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(copy \"C:\\\\Users\\\\Branden Hales\\\\Asana Alternative\\\\src\\\\assets\\\\bullfit-logo.png\" \"C:\\\\Users\\\\Branden Hales\\\\Asana Alternative\\\\public\\\\bullfit-logo.png\")",
+      "Bash(vercel --version)"
+    ]
+  }
+}

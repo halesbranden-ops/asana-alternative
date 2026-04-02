@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 60px;
+    --topbar-height: 56px;
+    --task-panel-width: 480px;
+
+    /* Easing curves */
+    --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+
+    /* Shadow tokens */
+    --shadow-lift-sm:  0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-lift:     0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-lift-lg:  0 16px 40px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.10);
+  }
+
+  html.dark {
+    --shadow-lift-sm:  0 2px 8px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+    --shadow-lift:     0 8px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-lift-lg:  0 16px 40px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  * {
+    box-sizing: border-box;
+    /* Colour transitions — transform/shadow handled per-element to avoid stacking-context issues */
+    transition:
+      background-color 0.18s var(--ease-smooth),
+      border-color     0.18s var(--ease-smooth),
+      color            0.15s var(--ease-smooth),
+      box-shadow       0.2s  var(--ease-smooth),
+      opacity          0.15s var(--ease-smooth);
+  }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Light mode defaults */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F0EFEC;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Dark mode body */
+  html.dark body {
+    background-color: #242424;
+    color: #FFFFFF;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #F0EFEC; }
+  ::-webkit-scrollbar-thumb { background: #D0D0D0; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #B0B0B0; }
+
+  html.dark ::-webkit-scrollbar-track { background: #242424; }
+  html.dark ::-webkit-scrollbar-thumb { background: #4A4A4A; }
+  html.dark ::-webkit-scrollbar-thumb:hover { background: #5A5A5A; }
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.92) translateY(6px); }
+  65%  {              transform: scale(1.02) translateY(-1px); }
+  100% { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+@keyframes scaleSpring {
+  0%   { opacity: 0; transform: scale(0.92); }
+  60%  {              transform: scale(1.03); }
+  80%  {              transform: scale(0.99); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-24px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(68, 170, 223, 0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(68, 170, 223, 0); }
+}
+
+@keyframes dropdownOpen {
+  0%   { opacity: 0; transform: scaleY(0.82); }
+  55%  { opacity: 1; transform: scaleY(1.008); }
+  100% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes dropdownBackdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Component layer ─────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Sidebar nav link ── */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#555555]
+           hover:bg-black/5 hover:text-[#111111] cursor-pointer relative overflow-hidden;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .sidebar-link:hover { transform: translateX(2px); }
+
+  html.dark .sidebar-link {
+    @apply text-[#A0A0A0] hover:bg-white/5 hover:text-white;
+  }
+
+  .sidebar-link.active {
+    @apply bg-black/[0.08] text-[#111111] font-medium;
+  }
+  html.dark .sidebar-link.active {
+    @apply bg-white/10 text-white;
+  }
+  /* Active left-edge indicator */
+  .sidebar-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 3px;
+    background: #44AADF;
+    border-radius: 0 3px 3px 0;
+    animation: fadeIn 0.2s ease;
+  }
+
+  /* ── Task row ── */
+  .task-row {
+    @apply flex items-center gap-3 px-4 py-2 rounded-lg group cursor-pointer;
+    transition: background-color 0.12s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .task-row:hover {
+    @apply bg-black/5;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lift-sm);
+  }
+  html.dark .task-row:hover {
+    @apply bg-white/5;
+  }
+
+  /* ── Card hover lift (widget cards, etc.) ── */
+  .card-lift {
+    transition: transform 0.2s var(--ease-spring), box-shadow 0.2s var(--ease-smooth);
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+  }
+  .card-lift:active {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lift-sm);
+  }
+
+  /* ── Panel backgrounds ── */
+  .panel-bg {
+    @apply bg-white border-l border-[#E0E0E0];
+  }
+  html.dark .panel-bg {
+    @apply bg-[#2A2A2A] border-l border-white/10;
+  }
+
+  /* ── Input base ── */
+  .input-base {
+    @apply bg-white border border-[#E0E0E0] rounded-lg px-3 py-2 text-sm text-[#111111]
+           placeholder-[#999999] focus:outline-none focus:ring-2 focus:ring-[#44AADF]/50
+           focus:border-[#44AADF]/50;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  html.dark .input-base {
+    @apply bg-[#333333] border-white/10 text-white placeholder-[#6B6B6B];
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply bg-[#44AADF] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#3399CE];
+    transition: background-color 0.15s ease, transform 0.15s var(--ease-spring), box-shadow 0.15s ease;
+  }
+  .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(68,170,223,0.4); }
+  .btn-primary:active { transform: translateY(0);    box-shadow: none; }
+
+  .btn-secondary {
+    @apply bg-white border border-[#E0E0E0] text-[#111111] font-medium px-4 py-2 rounded-lg hover:bg-[#F0EFEC];
+    transition: background-color 0.15s ease, transform 0.15s var(--ease-spring), box-shadow 0.15s ease;
+  }
+  .btn-secondary:hover  { transform: translateY(-1px); box-shadow: var(--shadow-lift-sm); }
+  .btn-secondary:active { transform: translateY(0);    box-shadow: none; }
+  html.dark .btn-secondary { @apply bg-[#2E2E2E] border-white/10 text-white hover:bg-white/10; }
+
+  .btn-ghost {
+    @apply text-[#555555] hover:text-[#111111] hover:bg-black/5 px-3 py-1.5 rounded-lg;
+    transition: background-color 0.12s ease, color 0.12s ease, transform 0.12s ease;
+  }
+  .btn-ghost:hover  { transform: translateY(-1px); }
+  .btn-ghost:active { transform: translateY(0) scale(0.97); }
+  html.dark .btn-ghost { @apply text-[#A0A0A0] hover:text-white hover:bg-white/10; }
+
+  .btn-danger {
+    @apply bg-red-500/10 border border-red-500/30 text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-500/20;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+  .btn-danger:hover  { transform: translateY(-1px); }
+  .btn-danger:active { transform: scale(0.97); }
+  html.dark .btn-danger { @apply bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30; }
+
+  /* ── Progress bars ── */
+  .progress-bar-track { @apply bg-black/10 rounded-full overflow-hidden; }
+  html.dark .progress-bar-track { @apply bg-white/10; }
+
+  .progress-bar-fill  { @apply h-full rounded-full transition-all duration-500; }
+
+  /* ── Badges ── */
+  .status-badge   { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium; }
+  .priority-badge { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium; }
+
+  /* ── Section headers ── */
+  .section-header {
+    @apply flex items-center gap-2 py-2 px-4 text-sm font-semibold text-[#555555] cursor-pointer hover:text-[#111111];
+    transition: color 0.12s ease;
+  }
+  html.dark .section-header { @apply text-[#A0A0A0] hover:text-white; }
+}
+
+/* ─── Utilities layer ────────────────────────────────────────────────────── */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Entrance animations */
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out both;
+  }
+  .animate-fade-slide-up {
+    animation: fadeSlideUp 0.35s var(--ease-out) both;
+  }
+  .animate-fade-slide-down {
+    animation: fadeSlideDown 0.25s var(--ease-out) both;
+  }
+  .animate-pop-in {
+    animation: popIn 0.4s var(--ease-spring) both;
+  }
+  .animate-scale-spring {
+    animation: scaleSpring 0.35s var(--ease-spring) both;
+  }
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s var(--ease-out) both;
+  }
+  .animate-slide-in-left {
+    animation: slideInLeft 0.25s var(--ease-out) both;
+  }
+  .animate-dropdown-open {
+    animation: dropdownOpen 0.2s cubic-bezier(0, 0, 0.2, 1) both;
+    transform-origin: top center;
+  }
+  .animate-dropdown-backdrop {
+    animation: dropdownBackdrop 0.18s ease-out both;
+  }
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Staggered entrance helpers */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.10s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.20s; }
+  .stagger-5 { animation-delay: 0.25s; }
+}
