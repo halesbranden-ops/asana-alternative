@@ -6,6 +6,7 @@ import { TaskCreateModal } from '../task/TaskCreateModal';
 import { GlobalSearchModal } from '../search/GlobalSearchModal';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ProjectCreateModal } from '../project/ProjectCreateModal';
+import { ProjectEditModal } from '../project/ProjectEditModal';
 
 export const AppShell: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ export const AppShell: React.FC = () => {
       <TaskCreateModal />
       <GlobalSearchModal />
       <ProjectCreateModal />
+      <ProjectEditModal />
       <ToastContainer />
     </div>
   );

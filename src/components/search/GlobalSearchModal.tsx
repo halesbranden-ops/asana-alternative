@@ -9,6 +9,7 @@ import { useCalendarStore, CalendarEvent } from '../../store/calendarStore';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../ui/Avatar';
 import { PriorityIcon } from '../task/PriorityIcon';
+import { ProjectInitial } from '../project/ProjectInitial';
 import { cn } from '../../utils/cn';
 import { searchBarRef } from '../../utils/searchBarRef';
 import { format, parseISO } from 'date-fns';
@@ -280,7 +281,7 @@ export const GlobalSearchModal: React.FC = () => {
     const p=r.item, i=gIdx++;
     return (
       <Row key={p.id} idx={i} onClick={()=>pick(r)}>
-        <div className="w-4 h-4 rounded flex-shrink-0" style={{background:p.color+'33',border:`1.5px solid ${p.color}`}}/>
+        <ProjectInitial name={p.name} color={p.color} size={22} />
         <div className="flex-1 min-w-0">
           <p className="text-sm text-[#111111] dark:text-white truncate"><Hl text={p.name} q={q}/></p>
           {p.description&&<p className="text-[11px] text-[#AAAAAA] dark:text-[#555555] truncate mt-px"><Hl text={p.description} q={q}/></p>}

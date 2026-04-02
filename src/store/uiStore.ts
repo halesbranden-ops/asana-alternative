@@ -21,7 +21,7 @@ function applyTheme(theme: Theme) {
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem('bullfit-theme') as Theme | null;
   if (stored === 'light' || stored === 'dark') return stored;
-  return 'dark'; // default to dark
+  return 'light'; // default to light
 }
 
 interface UIState {
@@ -37,6 +37,8 @@ interface UIState {
   toasts: Toast[];
   isStatusUpdateModalOpen: boolean;
   statusUpdateProjectId: string | null;
+  isProjectEditModalOpen: boolean;
+  projectEditId: string | null;
   theme: Theme;
 }
 
@@ -56,6 +58,8 @@ interface UIActions {
   removeToast: (id: string) => void;
   openStatusUpdate: (projectId: string) => void;
   closeStatusUpdate: () => void;
+  openProjectEdit: (projectId: string) => void;
+  closeProjectEdit: () => void;
   toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
 }
@@ -80,6 +84,8 @@ export const useUIStore = create<UIStore>((set) => ({
   toasts: [],
   isStatusUpdateModalOpen: false,
   statusUpdateProjectId: null,
+  isProjectEditModalOpen: false,
+  projectEditId: null,
   theme: initialTheme,
 
   openTaskDetail: (taskId) =>
@@ -131,6 +137,12 @@ export const useUIStore = create<UIStore>((set) => ({
 
   closeStatusUpdate: () =>
     set({ isStatusUpdateModalOpen: false, statusUpdateProjectId: null }),
+
+  openProjectEdit: (projectId) =>
+    set({ isProjectEditModalOpen: true, projectEditId: projectId }),
+
+  closeProjectEdit: () =>
+    set({ isProjectEditModalOpen: false, projectEditId: null }),
 
   toggleTheme: () =>
     set((state) => {
