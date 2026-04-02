@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
+import { useShallow } from 'zustand/react/shallow';
 import { useUIStore } from '../../store/uiStore';
-import { useProjectStore, selectProject, selectProjectSections } from '../../store/projectStore';
+import { useProjectStore, selectProject } from '../../store/projectStore';
 import { useUserStore } from '../../store/userStore';
 import { cn } from '../../utils/cn';
 import { ProjectInitial } from './ProjectInitial';
@@ -40,7 +41,13 @@ type Tab = 'general' | 'sections' | 'members' | 'danger';
 export const ProjectEditModal: React.FC = () => {
   const { isProjectEditModalOpen, projectEditId, closeProjectEdit, addToast } = useUIStore() as any;
   const project = useProjectStore(selectProject(projectEditId || ''));
-  const storeSections = useProjectStore(selectProjectSections(projectEditId || ''));
+  const storeSections = useProjectStore(
+    useShallow((state) => {
+      const proj = state.projects[projectEditId || ''];
+      if (!proj) return [] as import('../../types').Section[];
+      return proj.sectionIds.map((id) => state.sections[id]).filter(Boolean) as import('../../types').Section[];
+    })
+  );
   const { updateProject, deleteProject, archiveProject, createSection, addSectionToProject, updateSection, deleteSection, removeMember, addMember } = useProjectStore();
   const allUsers = useUserStore((s) => Object.values(s.users));
   const navigate = useNavigate();
