@@ -49,7 +49,7 @@ export const ProjectEditModal: React.FC = () => {
     })
   );
   const { updateProject, deleteProject, archiveProject, createSection, addSectionToProject, updateSection, deleteSection, removeMember, addMember } = useProjectStore();
-  const allUsers = useUserStore((s) => Object.values(s.users));
+  const allUsers = useUserStore(useShallow((s) => Object.values(s.users)));
   const navigate = useNavigate();
 
   const [tab, setTab] = useState<Tab>('general');
