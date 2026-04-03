@@ -39,6 +39,7 @@ interface UIState {
   statusUpdateProjectId: string | null;
   isProjectEditModalOpen: boolean;
   projectEditId: string | null;
+  isMobileSidebarOpen: boolean;
   theme: Theme;
 }
 
@@ -51,6 +52,8 @@ interface UIActions {
   closeSearch: () => void;
   toggleSidebar: () => void;
   setSidebarCollapsed: (collapsed: boolean) => void;
+  openMobileSidebar: () => void;
+  closeMobileSidebar: () => void;
   openProjectCreate: () => void;
   closeProjectCreate: () => void;
   setActiveView: (view: UIState['activeView']) => void;
@@ -86,6 +89,7 @@ export const useUIStore = create<UIStore>((set) => ({
   statusUpdateProjectId: null,
   isProjectEditModalOpen: false,
   projectEditId: null,
+  isMobileSidebarOpen: false,
   theme: initialTheme,
 
   openTaskDetail: (taskId) =>
@@ -111,6 +115,9 @@ export const useUIStore = create<UIStore>((set) => ({
     set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
 
   setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
+
+  openMobileSidebar: () => set({ isMobileSidebarOpen: true }),
+  closeMobileSidebar: () => set({ isMobileSidebarOpen: false }),
 
   openProjectCreate: () => set({ isProjectCreateModalOpen: true }),
   closeProjectCreate: () => set({ isProjectCreateModalOpen: false }),

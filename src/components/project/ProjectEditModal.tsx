@@ -185,12 +185,12 @@ export const ProjectEditModal: React.FC = () => {
   ];
 
   return createPortal(
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 animate-fade-in">
+    <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center sm:p-4 animate-fade-in">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm" onClick={closeProjectEdit} />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-white dark:bg-[#2A2A2A] rounded-2xl shadow-panel border border-[#E0E0E0] dark:border-white/10 flex flex-col max-h-[90vh] animate-scale-in overflow-hidden">
+      <div className="relative w-full sm:max-w-2xl bg-white dark:bg-[#2A2A2A] rounded-t-2xl sm:rounded-2xl shadow-panel border border-[#E0E0E0] dark:border-white/10 flex flex-col max-h-[92vh] animate-scale-in overflow-hidden">
 
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b border-[#E0E0E0] dark:border-white/10 flex-shrink-0">
@@ -221,7 +221,7 @@ export const ProjectEditModal: React.FC = () => {
         </div>
 
         {/* Tab content */}
-        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-5 space-y-5">
 
           {/* ── GENERAL TAB ── */}
           {tab === 'general' && (
@@ -291,7 +291,7 @@ export const ProjectEditModal: React.FC = () => {
               </div>
 
               {/* Dates */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-[#555555] dark:text-[#A0A0A0] mb-1.5 uppercase tracking-wide">Start Date</label>
                   <input type="date" value={form.startDate} onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}

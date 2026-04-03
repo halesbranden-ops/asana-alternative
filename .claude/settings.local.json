@@ -13,7 +13,10 @@
       "Bash(node -e \"const p = require\\(''./package.json''\\); console.log\\(JSON.stringify\\({type: p.type, scripts: p.scripts}, null, 2\\)\\)\")",
       "Bash(node -e \":*)",
       "Bash(copy \"C:\\\\Users\\\\Branden Hales\\\\Asana Alternative\\\\src\\\\assets\\\\bullfit-logo.png\" \"C:\\\\Users\\\\Branden Hales\\\\Asana Alternative\\\\public\\\\bullfit-logo.png\")",
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(vercel deploy:*)",
+      "Bash(npx tsc:*)",
+      "Bash(vercel --prod)"
     ]
   }
 }

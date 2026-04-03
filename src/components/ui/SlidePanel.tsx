@@ -43,7 +43,7 @@ export const SlidePanel: React.FC<SlidePanelProps> = ({
           isOpen ? 'translate-x-0' : 'translate-x-full',
           className
         )}
-        style={{ width }}
+        style={{ width: `min(100vw, ${width})` }}
       >
         {children}
       </div>

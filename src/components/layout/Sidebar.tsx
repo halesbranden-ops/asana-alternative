@@ -60,7 +60,12 @@ const NavItem: React.FC<{
   return item;
 };
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isMobileOverlay?: boolean;
+  onMobileClose?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ isMobileOverlay, onMobileClose }) => {
   const { sidebarCollapsed, toggleSidebar, openProjectCreate } = useUIStore();
   const projects = useProjectStore(useShallow((s) => Object.values(s.projects).filter((p) => !p.isArchived)));
   const unreadCount = useNotificationStore(selectUnreadCount);
@@ -75,18 +80,29 @@ export const Sidebar: React.FC = () => {
       ).length
     : 0;
 
-  const collapsed = sidebarCollapsed;
+  // On mobile overlay: always fully expanded
+  const collapsed = isMobileOverlay ? false : sidebarCollapsed;
 
   return (
     <aside
       className={cn(
         'h-full flex flex-col bg-white dark:bg-[#1C1C1C] border-r border-[#E0E0E0] dark:border-white/5 transition-all duration-300 flex-shrink-0',
-        collapsed ? 'w-[60px]' : 'w-[260px]'
+        isMobileOverlay ? 'absolute left-0 top-0 bottom-0 w-[280px]' : (collapsed ? 'w-[60px]' : 'w-[260px]')
       )}
     >
       {/* Logo */}
-      <div className={cn('flex items-center h-14 px-4 border-b border-[#E0E0E0] dark:border-white/5', collapsed && 'justify-center px-0')}>
+      <div className={cn('flex items-center h-14 px-4 border-b border-[#E0E0E0] dark:border-white/5', collapsed && !isMobileOverlay && 'justify-center px-0')}>
         <BullFitLogo collapsed={collapsed} />
+        {isMobileOverlay && (
+          <button
+            onClick={onMobileClose}
+            className="ml-auto p-1.5 rounded-lg text-[#999999] dark:text-[#6B6B6B] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M2 2l12 12M14 2L2 14" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Navigation */}
@@ -208,16 +224,18 @@ export const Sidebar: React.FC = () => {
                 </div>
               )}
             </button>
-            <Tooltip content={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} position={collapsed ? 'right' : 'top'}>
-              <button
-                onClick={toggleSidebar}
-                className="p-1.5 rounded-lg text-[#999999] dark:text-[#6B6B6B] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex-shrink-0"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className={cn('transition-transform', collapsed && 'rotate-180')}>
-                  <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            </Tooltip>
+            {!isMobileOverlay && (
+              <Tooltip content={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} position={collapsed ? 'right' : 'top'}>
+                <button
+                  onClick={toggleSidebar}
+                  className="p-1.5 rounded-lg text-[#999999] dark:text-[#6B6B6B] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex-shrink-0"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className={cn('transition-transform', collapsed && 'rotate-180')}>
+                    <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </Tooltip>
+            )}
           </>
         )}
       </div>

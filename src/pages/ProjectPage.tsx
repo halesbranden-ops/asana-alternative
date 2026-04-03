@@ -82,8 +82,9 @@ export const ProjectPage: React.FC = () => {
       <ProjectHeader project={project} />
 
       {/* View tabs and actions */}
-      <div className="flex items-center justify-between px-6 py-2 border-b border-[#E0E0E0] dark:border-white/10 flex-shrink-0 bg-white dark:bg-[#2A2A2A]">
-        <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2 px-3 sm:px-6 py-2 border-b border-[#E0E0E0] dark:border-white/10 flex-shrink-0 bg-white dark:bg-[#2A2A2A]">
+        {/* Scrollable tabs */}
+        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar flex-1 min-w-0">
           {views.map((view) => (
             <ViewTab
               key={view.id}
@@ -96,7 +97,7 @@ export const ProjectPage: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 flex-shrink-0">
           {activeView !== 'overview' && activeView !== 'calendar' && activeView !== 'timeline' && (
             <TaskFilters />
           )}
@@ -104,6 +105,7 @@ export const ProjectPage: React.FC = () => {
             variant="ghost"
             size="sm"
             onClick={() => openStatusUpdate && openStatusUpdate(project.id)}
+            className="hidden sm:flex"
           >
             Update Status
           </Button>
@@ -113,7 +115,8 @@ export const ProjectPage: React.FC = () => {
             onClick={() => openTaskCreate(project.id)}
             leftIcon={<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
           >
-            Add Task
+            <span className="hidden sm:inline">Add Task</span>
+            <span className="sm:hidden">Add</span>
           </Button>
         </div>
       </div>

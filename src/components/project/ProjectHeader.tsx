@@ -17,7 +17,7 @@ export const ProjectHeader: React.FC<ProjectHeaderProps> = ({ project }) => {
   const members = project.members.map((m) => users[m.userId]).filter(Boolean);
 
   return (
-    <div className="flex items-center gap-4 px-6 py-4 border-b border-[#E0E0E0] dark:border-white/10 bg-white dark:bg-[#2A2A2A]">
+    <div className="flex items-center gap-3 px-3 sm:px-6 py-3 sm:py-4 border-b border-[#E0E0E0] dark:border-white/10 bg-white dark:bg-[#2A2A2A]">
       {/* Project initial */}
       <ProjectInitial name={project.name} color={project.color} size={36} />
 

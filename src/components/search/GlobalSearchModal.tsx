@@ -385,7 +385,7 @@ export const GlobalSearchModal: React.FC = () => {
         )}
 
         {/* ── Results list ── */}
-        <div ref={listRef} className="overflow-y-auto overscroll-contain" style={{maxHeight:'calc(100vh - 200px)'}}>
+        <div ref={listRef} className="overflow-y-auto overscroll-contain" style={{maxHeight:'min(60vh, calc(100dvh - 180px))'}}>
 
           {/* Idle / recent */}
           {!q && (

@@ -16,12 +16,23 @@ interface TopBarProps {
 }
 
 export const TopBar: React.FC<TopBarProps> = ({ title, subtitle, actions, viewTabs, className }) => {
-  const { openSearch, openTaskCreate, theme, toggleTheme, isSearchOpen } = useUIStore();
+  const { openSearch, openTaskCreate, theme, toggleTheme, isSearchOpen, openMobileSidebar } = useUIStore();
   const unreadCount = useNotificationStore(selectUnreadCount);
   const navigate = useNavigate();
 
   return (
     <header className={cn('flex items-center h-14 px-4 border-b border-[#E0E0E0] dark:border-white/10 bg-white dark:bg-[#2A2A2A] flex-shrink-0 gap-3', className)}>
+
+      {/* Hamburger — mobile only */}
+      <button
+        onClick={openMobileSidebar}
+        className="md:hidden p-2 -ml-1 rounded-lg text-[#555555] dark:text-[#A0A0A0] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex-shrink-0"
+        aria-label="Open navigation"
+      >
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+          <path d="M2 4h14M2 9h14M2 14h14" />
+        </svg>
+      </button>
 
       {/* Title area */}
       {(title || subtitle) && (
