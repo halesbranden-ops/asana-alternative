@@ -30,8 +30,14 @@ export const WidgetShell: React.FC<WidgetShellProps> = ({
         ref={provided.innerRef}
         {...provided.draggableProps}
         className={cn(
-          'relative transition-all duration-150',
-          snapshot.isDragging && 'rotate-1 opacity-90 shadow-2xl z-50'
+          'relative transition-all duration-150 animate-fade-slide-up',
+          snapshot.isDragging && 'rotate-1 opacity-90 shadow-2xl z-50',
+          index === 0 && 'stagger-1',
+          index === 1 && 'stagger-2',
+          index === 2 && 'stagger-3',
+          index === 3 && 'stagger-4',
+          index === 4 && 'stagger-5',
+          index >= 5  && 'stagger-6',
         )}
       >
         {/* Edit-mode overlay ring */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { TaskDetailPanel } from '../task/TaskDetailPanel';
 import { TaskCreateModal } from '../task/TaskCreateModal';
@@ -11,6 +11,7 @@ import { useUIStore } from '../../store/uiStore';
 
 export const AppShell: React.FC = () => {
   const { isMobileSidebarOpen, closeMobileSidebar } = useUIStore();
+  const location = useLocation();
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F0EFEC] dark:bg-[#242424]">
@@ -22,14 +23,16 @@ export const AppShell: React.FC = () => {
       {/* Mobile sidebar overlay */}
       {isMobileSidebarOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={closeMobileSidebar} />
+          <div className="absolute inset-0 bg-black/50 animate-backdrop-in" onClick={closeMobileSidebar} />
           <Sidebar isMobileOverlay onMobileClose={closeMobileSidebar} />
         </div>
       )}
 
-      {/* Main content */}
+      {/* Main content — re-keyed on route change to trigger page-enter animation */}
       <main className="flex-1 flex flex-col overflow-hidden min-w-0">
-        <Outlet />
+        <div key={location.pathname} className="flex-1 flex flex-col overflow-hidden animate-page-enter">
+          <Outlet />
+        </div>
       </main>
 
       {/* Global portals */}

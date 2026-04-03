@@ -31,7 +31,7 @@ export const SlidePanel: React.FC<SlidePanelProps> = ({
       {/* Backdrop overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[49] bg-black/10 dark:bg-black/20"
+          className="fixed inset-0 z-[49] bg-black/10 dark:bg-black/20 animate-backdrop-in"
           onClick={onClose}
         />
       )}

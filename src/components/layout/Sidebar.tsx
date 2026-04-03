@@ -87,7 +87,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOverlay, onMobileClose
     <aside
       className={cn(
         'h-full flex flex-col bg-white dark:bg-[#1C1C1C] border-r border-[#E0E0E0] dark:border-white/5 transition-all duration-300 flex-shrink-0',
-        isMobileOverlay ? 'absolute left-0 top-0 bottom-0 w-[280px]' : (collapsed ? 'w-[60px]' : 'w-[260px]')
+        isMobileOverlay ? 'absolute left-0 top-0 bottom-0 w-[280px] animate-slide-in-from-left' : (collapsed ? 'w-[60px]' : 'w-[260px]')
       )}
     >
       {/* Logo */}

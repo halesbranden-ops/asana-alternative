@@ -9,12 +9,12 @@ export const ToastContainer: React.FC = () => {
   if (toasts.length === 0) return null;
 
   return createPortal(
-    <div className="fixed bottom-6 right-6 z-[70] flex flex-col gap-2">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[70] flex flex-col gap-2">
       {toasts.map((toast) => (
         <div
           key={toast.id}
           className={cn(
-            'flex items-center gap-3 px-4 py-3 rounded-xl shadow-panel border animate-scale-in min-w-[280px] max-w-[400px]',
+            'flex items-center gap-3 px-4 py-3 rounded-xl shadow-panel border animate-toast-slide min-w-[260px] max-w-[90vw] sm:max-w-[400px]',
             toast.type === 'success' && 'bg-green-50 dark:bg-green-500/20 border-green-200 dark:border-green-500/30 text-green-700 dark:text-green-300',
             toast.type === 'error' && 'bg-red-50 dark:bg-red-500/20 border-red-200 dark:border-red-500/30 text-red-700 dark:text-red-300',
             toast.type === 'info' && 'bg-[#44AADF]/10 dark:bg-[#44AADF]/20 border-[#44AADF]/30 text-[#44AADF]',

@@ -53,16 +53,16 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 animate-fade-in">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm animate-backdrop-in"
         onClick={onClose}
       />
       {/* Modal */}
       <div
         className={cn(
-          'relative w-full bg-white dark:bg-[#2E2E2E] border border-[#E0E0E0] dark:border-white/10 rounded-xl shadow-panel animate-scale-in max-h-[90vh] flex flex-col',
+          'relative w-full bg-white dark:bg-[#2E2E2E] border border-[#E0E0E0] dark:border-white/10 rounded-xl shadow-panel animate-pop-in max-h-[90vh] flex flex-col',
           sizeMap[size],
           className
         )}
